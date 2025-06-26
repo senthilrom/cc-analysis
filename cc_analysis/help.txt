@@ -1,0 +1,17 @@
+📄 How to Use the Credit Card Statement Extractor:
+
+1. 🔍 Click the "Browse" button to select one or more PDF statements.
+   - Only HDFC or IndusInd bank statements are supported (as of now).
+   - Password-protected PDFs are supported.
+
+2. 🔑 Enter the PDF password in the field.
+   - Usually HDFC uses format: First 4 letters of name + DDMM
+
+3. 🏦 Choose the issuing Bank from the dropdown (HDFC or IndusInd).
+
+4. ✅ Click "Extract & Save"
+   - The extracted data will be saved as an Excel file:
+     - `hdfc_statements.xlsx` or `indusind_statements.xlsx`
+     - Located in the same folder as the PDF(s)
+
+5. 📊 The Excel file is updated every time you run the tool — no duplicates!

@@ -1,0 +1,14 @@
+Credit Card Statement Extractor
+Version: 1.0.0
+Last Updated: 2025-06-26
+
+Author: Senthil (Customized by ChatGPT)
+
+Features:
+- Extracts HDFC & IndusInd credit card statements from password-protected PDFs
+- Consolidates and de-duplicates transactions
+- Automatically saves to Excel in the same directory
+
+Tech Stack:
+- Python + ttk GUI
+- pdfplumber, pandas, openpyxl

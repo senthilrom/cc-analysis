@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+
+# Virtual environments
+.venv/
+.env
+
+# Output
+*.xlsx
+build/
+dist/
+*.spec
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
