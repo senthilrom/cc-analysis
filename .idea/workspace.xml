@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e83a9121-9eb8-40fb-8683-0efee536b695" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/python-app.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/cc-analysis.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/__main__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/about.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/extractors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/help.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/license" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/get_mock_statement.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_core.py" afterDir="false" />
-    </list>
+    <list default="true" id="e83a9121-9eb8-40fb-8683-0efee536b695" name="Changes" comment="initial version 1.0.0" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,6 +67,27 @@
       <option name="presentableId" value="Default" />
       <updated>1750948969868</updated>
     </task>
+    <task id="LOCAL-00001" summary="initial version 1.0.0">
+      <option name="closed" value="true" />
+      <created>1750959518443</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750959518443</updated>
+    </task>
+    <task id="LOCAL-00002" summary="initial version 1.0.0">
+      <option name="closed" value="true" />
+      <created>1750959544152</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750959544152</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial version 1.0.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial version 1.0.0" />
   </component>
 </project>
