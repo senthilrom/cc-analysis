@@ -1,14 +1,18 @@
-Credit Card Statement Extractor
-Version: 1.0.0
-Last Updated: 2025-06-26
+# cc_analysis/about.txt
+# About - Credit Card Statement Consolidator v1.0
 
-Author: Senthil (Customized by ChatGPT)
+Developed by: Senthil Kumar  
+Email: senthilrom [at] gmail [dot] com  
+GitHub: https://github.com/senthilrom/cc-analysis
 
-Features:
-- Extracts HDFC & IndusInd credit card statements from password-protected PDFs
-- Consolidates and de-duplicates transactions
-- Automatically saves to Excel in the same directory
+This tool consolidates PDF-based credit card statements into structured, categorized data.  
+Supported banks: HDFC, IndusInd.
 
-Tech Stack:
-- Python + ttk GUI
-- pdfplumber, pandas, openpyxl
+Built with:
+- Python
+- pdfplumber
+- pandas
+- tkinter
+- SQLite3
+
+© 2025 Senthil Kumar. All rights reserved.

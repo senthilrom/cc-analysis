@@ -1,9 +1,9 @@
+# cc_analysis/db.py
+
 import sqlite3
 import os
 import hashlib
-
-DB_PATH = os.path.join(os.path.dirname(__file__), "transactions.db")
-
+from cc_analysis.constants import DB_PATH
 
 def init_db():
     with sqlite3.connect(DB_PATH) as conn:
@@ -62,3 +62,4 @@ def insert_transactions(df, bank_name):
         conn.commit()
 
     return inserted_count
+

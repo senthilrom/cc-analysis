@@ -5,19 +5,65 @@ from tkinter import filedialog, messagebox
 from tkinter import ttk
 import os
 import pandas as pd
+import json
+import subprocess
+import platform
 from cc_analysis.extractors import extract_hdfc, extract_indusind, append_to_excel, save_to_database
-import pdfplumber
-from datetime import datetime
-import sys
+from cc_analysis.bank_detector import detect_bank_type
+from cc_analysis.utils import validate_pdf_password, load_passwords, log_error
 
 def launch_gui():
     root = tk.Tk()
-    root.title("Credit Card Statement Extractor")
-    style = ttk.Style()
-    style.theme_use('xpnative') # Try 'vista', 'xpnative', 'alt', 'clam'
+    root.title("Credit Card Statement Consolidator")
 
-    PADX, PADY, ENTRY_WIDTH = 10, 6, 50
-    is_dark_mode = False
+    PADX = 10
+    PADY = 6
+    ENTRY_WIDTH = 50
+
+    passwords = load_passwords()
+
+    menubar = tk.Menu(root)
+
+    # File Menu
+    file_menu = tk.Menu(menubar, tearoff=0)
+    file_menu.add_command(label="Exit", command=root.quit)
+    menubar.add_cascade(label="File", menu=file_menu)
+
+    # Help Menu
+    help_menu = tk.Menu(menubar, tearoff=0)
+
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    def show_help():
+        try:
+            help_path = os.path.join(BASE_DIR, "help.txt")
+            with open(help_path, "r", encoding="utf-8") as f:
+                messagebox.showinfo("Help", f.read())
+        except Exception as e:
+            messagebox.showerror("Error", f"Unable to load Help: {str(e)}")
+
+    def show_about():
+        try:
+            about_path = os.path.join(BASE_DIR, "about.txt")
+            with open(about_path, "r", encoding="utf-8") as f:
+                messagebox.showinfo("About", f.read())
+        except Exception as e:
+            messagebox.showerror("Error", f"Unable to load About: {str(e)}")
+
+    help_menu.add_command(label="Help", command=show_help)
+    help_menu.add_command(label="About", command=show_about)
+    menubar.add_cascade(label="Help", menu=help_menu)
+
+    # Tools menu already exists
+    tools_menu = tk.Menu(menubar, tearoff=0)
+    tools_menu.add_command(label="Edit Category", command=edit_categories)
+    menubar.add_cascade(label="Tools", menu=tools_menu)
+
+    root.config(menu=menubar)
+
+    ttk.Label(root, text="Select PDF(s):").grid(row=0, column=0, sticky="e", padx=PADX, pady=PADY)
+    pdf_entry = ttk.Entry(root, width=ENTRY_WIDTH)
+    pdf_entry.grid(row=0, column=1, padx=PADX, pady=PADY)
 
     def select_multiple_pdfs():
         files = filedialog.askopenfilenames(filetypes=[("PDF Files", "*.pdf")])
@@ -25,117 +71,98 @@ def launch_gui():
             pdf_entry.delete(0, tk.END)
             pdf_entry.insert(0, ";".join(files))
 
-    def get_resource_path(filename):
-        """ Get path to resource, works for dev and PyInstaller .exe """
-        if hasattr(sys, "_MEIPASS"):
-            return os.path.join(sys._MEIPASS, filename)
-        return os.path.join(os.path.dirname(__file__), filename)
+    ttk.Button(root, text="Browse", command=select_multiple_pdfs).grid(row=0, column=2, padx=PADX, pady=PADY)
 
-    def show_about():
-        try:
-            with open(get_resource_path("about.txt"), "r", encoding="utf-8") as f:
-                about_text = f.read()
-        except FileNotFoundError:
-            about_text = "About file not found."
-        messagebox.showinfo("About", about_text)
-
-    def show_help():
-        try:
-            with open(get_resource_path("help.txt"), "r", encoding="utf-8") as f:
-                help_text = f.read()
-        except FileNotFoundError:
-            help_text = "Help file not found."
-        messagebox.showinfo("Help / User Guide", help_text)
-
-    def validate_pdf_password(pdf_path, password):
-        try:
-            with pdfplumber.open(pdf_path, password=password) as pdf:
-                if pdf.pages:
-                    return True
-        except Exception as e:
-            log_error(f"Failed to open PDF: {pdf_path}\nError: {e}")
-        return False
-
-    def log_error(message):
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open("error.log", "a", encoding="utf-8") as f:
-            f.write(f"[{timestamp}] {message}\n")
+    progress_label = ttk.Label(root, text="Progress: 0/0")
+    progress_label.grid(row=1, column=1, columnspan=2, sticky="w", padx=PADX, pady=(PADY - 3))
+    progress_var = tk.DoubleVar()
+    progress_bar = ttk.Progressbar(root, variable=progress_var, maximum=100, length=ENTRY_WIDTH * 6)
+    progress_bar.grid(row=2, column=0, columnspan=3, padx=PADX, pady=PADY)
 
     def run_extraction():
         pdf_paths = pdf_entry.get().split(";")
-        password = pwd_entry.get()
-        bank = bank_var.get()
-
-        if not all([pdf_paths, password, bank]):
-            messagebox.showerror("Error", "Please fill all fields.")
+        if not pdf_paths:
+            messagebox.showerror("Error", "Please select PDF files.")
             return
 
-        folder = os.path.dirname(pdf_paths[0])
-        excel = os.path.join(folder, f"{bank.lower()}_statements.xlsx")
         combined_df = pd.DataFrame()
         progress_label.config(text=f"Progress: 0/{len(pdf_paths)}")
         progress_var.set(0)
 
         try:
-            # Validate password with the first file only
-            if not validate_pdf_password(pdf_paths[0], password):
-                messagebox.showerror("Wrong Password",
-                                     "❌ Failed to decrypt PDF.\nPlease check and enter the correct password.")
-                return
-
             for idx, pdf in enumerate(pdf_paths):
                 if not os.path.exists(pdf):
                     continue
 
+                # Try all known bank passwords to detect bank
+                bank = None
+                password = None
+                for bnk, pwd in passwords.items():
+                    if validate_pdf_password(pdf, pwd):
+                        bank = detect_bank_type(pdf, pwd)
+                        password = pwd
+                        break
+
+                if not bank or not password:
+                    log_error(f"{pdf} - ❌ Could not decrypt or detect bank")
+                    messagebox.showerror("Error", f"{pdf} - ❌ Could not decrypt or detect bank")
+                    continue
+
+                # Extract based on detected bank
                 if bank == "HDFC":
                     df = extract_hdfc(pdf, password)
-                    unique_cols = ["Datetime", "Description", "Amount"]
-                else:
+                elif bank == "IndusInd":
                     df = extract_indusind(pdf, password)
-                    unique_cols = ["Date", "Transaction Details", "Amount"]
+                else:
+                    log_error(f"❌ Unsupported bank type for file: {os.path.basename(pdf)}")
+                    messagebox.showerror("Error", f"Unsupported bank type for file: {os.path.basename(pdf)}")
+                    continue
 
-                if not df.empty:
-                    combined_df = pd.concat([combined_df, df], ignore_index=True)
+                # Skip chart-only or empty transaction files
+                if df.empty:
+                    log_error(f"{pdf} - ⚠️ No transaction data found, skipped.")
+                    continue
+
+                df["Bank"] = bank
+                combined_df = pd.concat([combined_df, df], ignore_index=True)
 
                 progress_label.config(text=f"Progress: {idx + 1}/{len(pdf_paths)}")
                 progress_var.set((idx + 1) * (100 / len(pdf_paths)))
                 root.update_idletasks()
 
-            if not os.path.exists(excel):
-                with pd.ExcelWriter(excel) as writer:
-                    pd.DataFrame(columns=combined_df.columns).to_excel(writer, index=False)
+            if combined_df.empty:
+                log_error("No transactions were extracted.")
+                messagebox.showwarning("No Data", "No transactions were extracted.")
+                return
 
-            save_to_database(combined_df, bank)
-            total = append_to_excel(combined_df, excel, bank, unique_cols)
-            messagebox.showinfo("Success", f"✅ Saved to: {excel}\nProcessed {len(pdf_paths)} files.\nTotal records: {total}")
+            total = append_to_excel(combined_df)
+            inserted = save_to_database(combined_df, bank)
+            messagebox.showinfo("Success",
+                                f"✅ Processed {len(pdf_paths)} files.\nRecords saved to Excel: {total}\nRecords saved to DB: {inserted}")
+
         except Exception as e:
+            log_error(f'Error, {str(e)}')
             messagebox.showerror("Error", str(e))
 
-    # === GUI Layout ===
-    ttk.Label(root, text="Select PDF(s):").grid(row=0, column=0, sticky="e", padx=PADX, pady=PADY)
-    pdf_entry = ttk.Entry(root, width=ENTRY_WIDTH)
-    pdf_entry.grid(row=0, column=1, padx=PADX, pady=PADY)
-    ttk.Button(root, text="Browse", command=select_multiple_pdfs).grid(row=0, column=2, padx=PADX, pady=PADY)
-
-    ttk.Label(root, text="PDF Password:").grid(row=1, column=0, sticky="e", padx=PADX, pady=PADY)
-    pwd_entry = ttk.Entry(root, width=ENTRY_WIDTH, show="*")
-    pwd_entry.grid(row=1, column=1, columnspan=2, padx=PADX, pady=PADY, sticky="w")
-
-    ttk.Label(root, text="Bank:").grid(row=2, column=0, sticky="e", padx=PADX, pady=PADY)
-    bank_var = tk.StringVar()
-    bank_combo = ttk.Combobox(root, textvariable=bank_var, values=["HDFC", "IndusInd"], state="readonly", width=ENTRY_WIDTH - 4)
-    bank_combo.set("HDFC")
-    bank_combo.grid(row=2, column=1, columnspan=2, sticky="w", padx=PADX, pady=PADY)
-
-    progress_label = ttk.Label(root, text="Progress: 0/0")
-    progress_label.grid(row=3, column=1, columnspan=2, sticky="w", padx=PADX, pady=(PADY - 3))
-
-    progress_var = tk.DoubleVar()
-    progress_bar = ttk.Progressbar(root, variable=progress_var, maximum=100, length=ENTRY_WIDTH * 6)
-    progress_bar.grid(row=4, column=0, columnspan=3, padx=PADX, pady=PADY)
-
-    ttk.Button(root, text="Extract & Save", command=run_extraction).grid(row=5, column=0, columnspan=3, pady=PADY + 4)
-    ttk.Button(root, text="About", command=show_about).grid(row=6, column=1, sticky="e", padx=5)
-    ttk.Button(root, text="Help", command=show_help).grid(row=6, column=2, sticky="w", padx=5)
+    ttk.Button(root, text="Extract & Save", command=run_extraction).grid(row=3, column=0, columnspan=3, pady=PADY + 4)
 
     root.mainloop()
+
+def edit_categories():
+    category_file = os.path.join(os.path.dirname(__file__), "categories.json")
+    if not os.path.exists(category_file):
+        with open(category_file, "w") as f:
+            json.dump({"amazon": "Shopping", "zomato": "Food"}, f, indent=4)
+
+    # Open in default editor
+    if platform.system() == "Windows":
+        os.startfile(category_file)
+    elif platform.system() == "Darwin":
+        subprocess.call(["open", category_file])
+    else:
+        subprocess.call(["xdg-open", category_file])
+
+
+# For standalone execution
+if __name__ == "__main__":
+    launch_gui()

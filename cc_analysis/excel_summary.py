@@ -5,17 +5,13 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.chart import LineChart, Reference
 
 
-def update_excel_summary(excel_path, bank):
+def update_excel_summary(excel_path):
     if not os.path.exists(excel_path):
         return
 
     df = pd.read_excel(excel_path)
     if df.empty:
         return
-
-    # Add bank column if missing
-    if "Bank" not in df.columns:
-        df["Bank"] = bank
 
     # Clean up and standardize date field
     date_col = "Datetime" if "Datetime" in df.columns else "Date"

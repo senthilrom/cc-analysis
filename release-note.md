@@ -1,58 +1,34 @@
-# 📦 Release Notes – Credit Card Statement Extractor
-
-This document tracks all feature updates, enhancements, and fixes for the `cc-analysis` GUI tool.
 
 ---
 
-## ✅ Version 1.0.0 – Initial Release (2025-06-26)
+### 📝 `release_notes.md`
 
-### ✨ Features
-- GUI for extracting and saving HDFC / IndusInd credit card statements
-- Bulk PDF upload support
-- Secure password input for encrypted PDFs
-- Smart Excel de-duplication
-- Dark mode toggle
-- Progress bar for batch processing
-- “Help” and “About” popups
-
-### 📄 Format Support
-- HDFC: `DD/MM/YYYY HH:MM:SS + Description + Amount`
-- IndusInd: `Date + Merchant + Category + Reward Points + Amount`
+```markdown
+# 📦 Credit Card Statement Consolidator - Release Notes
 
 ---
 
-## 🔐 Version 1.1.0 – Encrypted PDF Support (TBD)
+## v1.1 - [June 2025]
 
-### 🔒 New
-- Encrypted PDF validation before processing
-- Error logging to `error.log`
-- One error popup per batch on wrong password
+✅ Major Enhancements:
+- Auto-categorization based on `categories.json`
+- Bank detection using regex + fallback
+- Unified Excel + DB storage
+- Secrets and logs now stored outside `.exe` (AppData / Documents)
+- GUI: Help/About/Category editor menu added
+- Logging of skipped or invalid PDFs (`error.log`)
+- Unit tests split: `test_extractors.py`, `test_utils.py`, etc.
 
-### 🧪 Test Improvements
-- Auto-generated mock HDFC & IndusInd PDFs
-- Encrypted test PDF coverage
-- Full test suite (8+ unit tests)
-
----
-
-## 🔧 Version 1.2.0 – PyInstaller & Deployment Ready (TBD)
-
-### 📦 Packaging
-- `.spec` file for clean `.exe` builds
-- Embedded `help.txt` and `about.txt` support
-- `.ico` app icon
-- Compatible with PyInstaller `--onefile --windowed`
+🪛 Internal:
+- Project refactored to modular files
+- `.spec` updated to exclude sensitive files
+- `.gitignore` updated
 
 ---
 
-## 📍 Planned for 1.3.x
+## v1.0 - [April 2025]
 
-- Add Axis, SBI format support
-- Export logs or reports to PDF
-- SQLite history or backup option
-- Auto-updater or splash screen
-
----
-
-> Created by Senthil | Maintained by ChatGPT  
-> Last updated: 2025-06-26
+- Extract HDFC and IndusInd PDF statements
+- GUI for selecting PDFs and passwords
+- Bank-wise Excel file generation
+- SQLite DB with deduplication

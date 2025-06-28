@@ -50,6 +50,6 @@ if __name__ == "__main__":
     os.makedirs("tests/test_data", exist_ok=True)
     create_hdfc_mock_pdf("tests/test_data/mock_hdfc.pdf")
     create_indusind_mock_pdf("tests/test_data/mock_indusind.pdf")
-    encrypt_pdf("tests/test_data/mock_hdfc.pdf", "tests/test_data/mock_hdfc_encrypted.pdf", "hdfc123")
-    encrypt_pdf("tests/test_data/mock_indusind.pdf", "tests/test_data/mock_indusind_encrypted.pdf", "indusind123")
+    encrypt_pdf("tests/test_data/mock_hdfc.pdf", "tests/test_data/mock_hdfc_encrypted.pdf", "RSEN1211")
+    encrypt_pdf("tests/test_data/mock_indusind.pdf", "tests/test_data/mock_indusind_encrypted.pdf", "sent1211")
     print("✅ Mock PDFs generated in tests/test_data/")

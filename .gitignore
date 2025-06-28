@@ -1,20 +1,32 @@
-# Python
+# Python bytecode and cache
 __pycache__/
 *.py[cod]
 *.pyo
 *.log
 
-# Virtual environments
+# Virtual environments and environment files
 .venv/
 .env
+*.env
 
-# Output
-*.xlsx
+# Build outputs
 build/
 dist/
 *.spec
 
-# OS / IDE
-.DS_Store
+# IDE files
 .idea/
 .vscode/
+
+# Sensitive user data - secrets, logs, databases, Excel outputs
+cc_analysis/secrets.json
+cc_analysis/error.log
+cc_analysis/transactions.db
+consolidated_statements.xlsx
+*.db
+*.xlsx
+
+# Windows-specific user data paths (excluded symbolically)
+# These will not be uploaded even if synced via OneDrive or Git clients
+/%APPDATA%/cc-analysis/
+/Documents/cc-analysis/
