@@ -19,7 +19,7 @@ def update_excel_summary(excel_path, bank):
 
     # Clean up and standardize date field
     date_col = "Datetime" if "Datetime" in df.columns else "Date"
-    df[date_col] = pd.to_datetime(df[date_col])
+    df[date_col] = pd.to_datetime(df[date_col], dayfirst=True, errors='coerce')
     df["Month"] = df[date_col].dt.to_period("M").astype(str)
 
     # Group by Month & Bank
