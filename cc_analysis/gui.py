@@ -5,7 +5,7 @@ from tkinter import filedialog, messagebox
 from tkinter import ttk
 import os
 import pandas as pd
-from cc_analysis.extractors import extract_hdfc, extract_indusind, append_to_excel
+from cc_analysis.extractors import extract_hdfc, extract_indusind, append_to_excel, save_to_database
 import pdfplumber
 from datetime import datetime
 import sys
@@ -105,7 +105,8 @@ def launch_gui():
                 with pd.ExcelWriter(excel) as writer:
                     pd.DataFrame(columns=combined_df.columns).to_excel(writer, index=False)
 
-            total = append_to_excel(combined_df, excel, unique_cols)
+            save_to_database(combined_df, bank)
+            total = append_to_excel(combined_df, excel, bank, unique_cols)
             messagebox.showinfo("Success", f"✅ Saved to: {excel}\nProcessed {len(pdf_paths)} files.\nTotal records: {total}")
         except Exception as e:
             messagebox.showerror("Error", str(e))
