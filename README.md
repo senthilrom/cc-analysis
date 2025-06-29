@@ -1,42 +1,43 @@
-# 💳 Credit Card Statement Consolidator
+💡 Overview
 
-A Python-based desktop application that extracts and consolidates credit card statements (PDF) from **HDFC** and **IndusInd** banks into a single `.xlsx` file and `.db` database — with auto-categorization and pattern analysis.
+This is a powerful personal finance tool to consolidate credit card and bank transactions from various formats and banks, including:
 
----
+Credit Card Statements (PDF)
 
-## 🔧 Features
+Bank Statements (PDF, Excel, CSV)
 
-- 🔐 Password-protected PDF extraction
-- 🧠 Auto-detect bank type (HDFC / IndusInd)
-- 🧮 Auto-categorize expenses using keywords (`categories.json`)
-- 📊 Summary charts generated in Excel
-- 📁 Consolidated Excel + SQLite DB for analytics
-- 🧠 Remembers processed entries (deduplicated)
-- 📝 Edit categories easily from GUI
-- 🪵 Logs all skipped/invalid PDFs to `error.log`
-- 🖼️ Easy GUI with Tkinter (no console window)
+🔍 Supported Banks
 
----
+Credit Card: HDFC, IndusInd
 
-## 🗂️ File Structure
+Bank Accounts: ICICI, HDFC, IndusInd
 
-| File/Folder                      | Purpose                           |
-|----------------------------------|-----------------------------------|
-| `cc_analysis/`                   | Main app logic (extractors, GUI)  |
-| `transactions.db`                | SQLite DB with all transactions   |
-| `consolidated_statements.xlsx`   | Merged Excel file                 |
-| `secrets.json`                   | PDF passwords (stored in AppData) |
-| `categories.json`                | User-defined keyword mappings     |
-| `error.log`                      | All errors and skipped files      |
+🎯 Features
 
----
+🖼 Unified GUI (Tkinter-based)
 
-## 🚀 Getting Started
+🧾 Supports PDFs, Excels, CSVs
 
-### Installation
+📑 Consolidated Excel summary + SQLite DB
 
-```bash
-git clone https://github.com/senthilrom/cc-analysis.git
-cd cc-analysis
+🧠 Auto detects bank types
+
+🪵 Error logging to file
+
+📁 All data saved in Documents/cc-analysis
+
+🚀 Quick Start
+
 pip install -r requirements.txt
-python cc_analysis/__main__.py
+
+Run the GUI:
+
+python -m cc_analysis.gui
+
+Select your files (.pdf/.csv/.xls)
+
+Click "Extract & Save"
+
+View Excel and DB files in:
+
+~/Documents/cc-analysis/

@@ -5,36 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e83a9121-9eb8-40fb-8683-0efee536b695" name="Changes" comment="initial version 1.0.0">
-      <change afterPath="$PROJECT_DIR$/cc_analysis/categories.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/categorizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_categorizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_extractor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_skipped_log.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cc-analysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cc-analysis.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cc_analysis/bank_statement_parser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc_analysis/about.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/about.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/excel_summary.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/excel_summary.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cc_analysis/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc_analysis/extractors.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/extractors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc_analysis/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/gui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc_analysis/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/help.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/transactions.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/release-note.md" beforeDir="false" afterPath="$PROJECT_DIR$/release-note.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/get_mock_statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/get_mock_statement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_core.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tests/test_data/mock_hdfc.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tests/test_data/mock_hdfc_encrypted.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tests/test_data/mock_indusind.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tests/test_data/mock_indusind_encrypted.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +61,7 @@
     "Python tests.Python tests in test_skipped_log.py.executor": "Run",
     "Python tests.Python tests in test_utils.py.executor": "Run",
     "Python.__main__.executor": "Run",
+    "Python.bank_statement_parser.executor": "Run",
     "Python.cc_extractor.executor": "Run",
     "Python.cc_gui_ttk.executor": "Run",
     "Python.convert_ico.executor": "Run",
@@ -91,14 +73,67 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true"
+    "git-widget-placeholder": "v2.0",
+    "ignore.virus.scanning.warn.message": "true",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\PycharmProjects\cc-analysis\cc_analysis" />
     </key>
+  </component>
+  <component name="RunManager" selected="Python.gui">
+    <configuration name="bank_statement_parser" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cc-analysis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cc_analysis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cc_analysis/bank_statement_parser.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gui" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cc-analysis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cc_analysis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cc_analysis/gui.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.gui" />
+        <item itemvalue="Python.bank_statement_parser" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -145,5 +180,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial version 1.0.0" />
     <option name="LAST_COMMIT_MESSAGE" value="initial version 1.0.0" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/cc_analysis/extractors.py</url>
+          <line>73</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -1,20 +1,19 @@
-# Help - Credit Card Statement Consolidator
+How to Use:
 
-This tool allows you to:
-- Import HDFC and IndusInd credit card PDF statements.
-- Automatically extract and consolidate transactions.
-- Detect and categorize transactions based on description.
-- Maintain a local SQLite database and Excel dashboard.
-- Analyze your spend patterns across banks.
+Click Browse to select Credit Card and/or Bank Statement files.
 
-## Features
-- Auto-detection of bank and decryption using secrets.json.
-- Category mappings are user-configurable via `categories.json`.
-- Summary charts in the Excel file.
-- Logging of skipped or malformed files to `error.log`.
+Multiple files (PDF/CSV/XLS) can be selected together.
 
-## How to Use
-1. Click 'Browse' and select one or more credit card PDFs.
-2. Click 'Extract & Save' to process and save the data.
-3. Use `Tools > Edit Category` to map new keywords to categories.
-4. Check `consolidated_statements.xlsx` and `transactions.db` for results.
+Click "Extract & Save" to process.
+
+If statements are password protected, ensure the correct passwords are saved in secrets.json.
+
+Output Location:
+
+Excel: Documents/cc-analysis/consolidated_statements.xlsx
+
+Bank CSV: Documents/cc-analysis/consolidated_transactions.csv
+
+Database: Documents/cc-analysis/*.db
+
+Errors: AppData/cc-analysis/error.log

@@ -1,5 +1,5 @@
 # cc_analysis/about.txt
-# About - Credit Card Statement Consolidator v1.0
+# About - Statement Consolidator Tool v2.0
 
 Developed by: Senthil Kumar  
 Email: senthilrom [at] gmail [dot] com  

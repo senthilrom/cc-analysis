@@ -3,12 +3,14 @@
 import os
 import re
 import pdfplumber
+import sqlite3
 import pandas as pd
 from cc_analysis.db import insert_transactions
 from cc_analysis.excel_summary import update_excel_summary
 from cc_analysis.categorizer import assign_category, load_category_mappings
 from cc_analysis.constants import COLUMNS
-from cc_analysis.constants import EXCEL_PATH
+from cc_analysis.constants import EXCEL_PATH, DB_PATH
+from cc_analysis.utils import log_error
 
 def extract_hdfc(pdf_path, password):
     pattern = re.compile(r"(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2}:\d{2})\s+(.+?)\s+([\d,]+\.\d{2})(\s+Cr)?$")
@@ -69,17 +71,36 @@ def extract_indusind(pdf_path, password):
     return pd.DataFrame(transactions, columns=COLUMNS)
 
 def append_to_excel(df, excel_path=EXCEL_PATH):
-    if os.path.exists(excel_path):
-        df_existing = pd.read_excel(excel_path)
-        df_combined = pd.concat([df_existing, df], ignore_index=True)
-        df_combined.drop_duplicates(subset=["Date", "Description", "Amount", "Bank"], inplace=True)
-    else:
-        df_combined = df
+    from cc_analysis.utils import log_error
 
-    df_combined.to_excel(excel_path, index=False)
-    update_excel_summary(excel_path)
-    return len(df_combined)
+    if df.empty:
+        log_error("append_to_excel: Empty dataframe received, nothing to write.")
+        return 0
+
+    try:
+        if os.path.exists(excel_path):
+            df_existing = pd.read_excel(excel_path)
+            df_combined = pd.concat([df_existing, df], ignore_index=True)
+            df_combined.drop_duplicates(subset=["Date", "Description", "Amount", "Bank"], inplace=True)
+        else:
+            df_combined = df
+
+        df_combined.to_excel(excel_path, index=False)
+        update_excel_summary(excel_path)
+        return len(df_combined)
+
+    except Exception as e:
+        log_error(f"append_to_excel failed: {str(e)}")
+        return 0
 
 
-def save_to_database(df, bank):
-    return insert_transactions(df, bank)
+def save_to_database(df, db_path=DB_PATH):
+    try:
+        conn = sqlite3.connect(db_path)
+        df.to_sql("transactions", conn, if_exists="append", index=False)
+        inserted = len(df)
+        conn.close()
+        return inserted
+    except Exception as e:
+        log_error(f"DB save failed: {str(e)}")
+        return 0

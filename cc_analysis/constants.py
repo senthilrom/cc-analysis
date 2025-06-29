@@ -19,6 +19,8 @@ EXCEL_PATH = DOCS_DIR / "consolidated_statements.xlsx"
 CATEGORY_MAP_PATH = Path(__file__).parent / "categories.json"
 HELP_PATH = Path(__file__).parent / "help.txt"
 ABOUT_PATH = Path(__file__).parent / "about.txt"
+BANK_DB_PATH = DOCS_DIR / "bank_transactions.db"
+BANK_CSV_PATH = DOCS_DIR / "consolidated_transactions.csv"
 
 # Column headers for consistent DataFrames
 COLUMNS = [
