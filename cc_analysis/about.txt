@@ -1,12 +1,12 @@
 # cc_analysis/about.txt
-# About - Statement Consolidator Tool v2.0
+# About - Statement Consolidator Tool v3.0
 
 Developed by: Senthil Kumar  
 Email: senthilrom [at] gmail [dot] com  
 GitHub: https://github.com/senthilrom/cc-analysis
 
-This tool consolidates PDF-based credit card statements into structured, categorized data.  
-Supported banks: HDFC, IndusInd.
+Unify and simplify tracking of credit card and bank transactions.
+Supported banks: HDFC, IndusInd, ICICI.
 
 Built with:
 - Python

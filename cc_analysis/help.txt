@@ -10,10 +10,8 @@ If statements are password protected, ensure the correct passwords are saved in 
 
 Output Location:
 
-Excel: Documents/cc-analysis/consolidated_statements.xlsx
+Excel: Documents/cc-analysis/consolidated_statements_v3.xlsx
 
-Bank CSV: Documents/cc-analysis/consolidated_transactions.csv
-
-Database: Documents/cc-analysis/*.db
+Unified DB: Documents/cc-analysis/consolidated.db
 
 Errors: AppData/cc-analysis/error.log

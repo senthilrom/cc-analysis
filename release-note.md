@@ -1,14 +1,14 @@
-v2.0 Highlights:
+v3.0 Highlights:
 
-🧠 Auto-detect & parse bank and credit card statements
+🔄 Unified database for both bank and credit card statements
 
-📁 Unified folder structure (Documents/cc-analysis)
+📁 Single Excel + DB output for all data
 
-🔐 PDF password detection & validation
+📊 Analytics-ready format (with SourceType, Bank)
 
-🛠 Modular parsing: extractors, bank_detector, bank_statement_parser
+🛠 Compatible with GUI batch uploads
 
-📊 Supports CSV export, Excel summary, and DB persistence
+📍 Paves the way for monthly reports and category tracking
 
 Notes:
 

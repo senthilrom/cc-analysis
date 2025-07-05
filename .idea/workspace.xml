@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e83a9121-9eb8-40fb-8683-0efee536b695" name="Changes" comment="initial version 1.0.0">
-      <change afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cc_analysis/bank_statement_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc_analysis/about.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/about.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/extractors.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/extractors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cc_analysis/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/gui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cc_analysis/help.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cc_analysis/help.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/release-note.md" beforeDir="false" afterPath="$PROJECT_DIR$/release-note.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "v2.0",
+    "git-widget-placeholder": "v3.0",
     "ignore.virus.scanning.warn.message": "true",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }

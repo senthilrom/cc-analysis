@@ -1,3 +1,15 @@
+v3.0.0 - 2025-06-29
+
+🔄 Unified database (consolidated.db) for credit card and bank statements
+
+🆕 Added SourceType column to distinguish between CreditCard and Bank
+
+📊 Enhanced analytics foundation for consolidated spend pattern analysis
+
+📁 Excel consolidated into consolidated_statements_v3.xlsx
+
+📈 Future-proof structure for monthly & category-wise spend insights
+
 v2.0.0 - 2025-06-29
 
 ✅ Integrated credit card and bank statement processing into a unified GUI.

@@ -26,6 +26,8 @@ Bank Accounts: ICICI, HDFC, IndusInd
 
 📁 All data saved in Documents/cc-analysis
 
+🔄 Version 3.0: Unified data store and analytics foundation
+
 🚀 Quick Start
 
 pip install -r requirements.txt
