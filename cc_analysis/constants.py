@@ -14,13 +14,16 @@ DOCS_DIR.mkdir(parents=True, exist_ok=True)
 # File paths
 SECRETS_PATH = APPDATA_DIR / "secrets.json"
 LOG_FILE = APPDATA_DIR / "error.log"
-DB_PATH = DOCS_DIR / "transactions.db"
+# DB_PATH = DOCS_DIR / "transactions.db"
 EXCEL_PATH = DOCS_DIR / "consolidated_statements.xlsx"
 CATEGORY_MAP_PATH = Path(__file__).parent / "categories.json"
 HELP_PATH = Path(__file__).parent / "help.txt"
 ABOUT_PATH = Path(__file__).parent / "about.txt"
-BANK_DB_PATH = DOCS_DIR / "bank_transactions.db"
-BANK_CSV_PATH = DOCS_DIR / "consolidated_transactions.csv"
+# BANK_DB_PATH = DOCS_DIR / "bank_transactions.db"
+# BANK_CSV_PATH = DOCS_DIR / "consolidated_transactions.csv"
+
+# constants.py
+CONSOLIDATED_DB_PATH = DOCS_DIR / "consolidated.db"
 
 # Column headers for consistent DataFrames
 COLUMNS = [

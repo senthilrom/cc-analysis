@@ -1,19 +1,14 @@
-v3.0 Highlights:
+**Release Date:** 2025-07-06
 
-🔄 Unified database for both bank and credit card statements
+## Highlights
+- 🎯 Unified sheet output: All transactions stored in `All_Transactions`
+- 🧹 Deduplication using Date + Description + Amount fields
+- 🧪 Fully tested with unit tests for:
+  - Clean appends
+  - Duplicate detection
+  - Malformed and invalid rows
+- 💪 Robust error handling during append and parse
 
-📁 Single Excel + DB output for all data
-
-📊 Analytics-ready format (with SourceType, Bank)
-
-🛠 Compatible with GUI batch uploads
-
-📍 Paves the way for monthly reports and category tracking
-
-Notes:
-
-Compatible with Windows (Tested)
-
-Recommended: Save all statements in a folder and process in batch
-
-Uses secrets.json for PDF passwords securely
+## Migration Notes
+- Remove older multi-sheet Excel format
+- Back up older data before using v3.0

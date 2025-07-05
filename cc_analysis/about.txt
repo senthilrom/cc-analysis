@@ -1,5 +1,4 @@
-# cc_analysis/about.txt
-# About - Statement Consolidator Tool v3.0
+About - Statement Consolidator Tool v3.0
 
 Developed by: Senthil Kumar  
 Email: senthilrom [at] gmail [dot] com  

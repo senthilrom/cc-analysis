@@ -1,17 +1,19 @@
-How to Use:
+Credit Card and Bank Statement Consolidator - Help
 
-Click Browse to select Credit Card and/or Bank Statement files.
+Usage:
+    python main.py --input <path_to_statement_files> --output <output_excel_file>
 
-Multiple files (PDF/CSV/XLS) can be selected together.
+Options:
+    --input         Path to input files (PDF, CSV, XLS)
+    --output        Path to the consolidated Excel output
+    --log-level     Set log verbosity [INFO, DEBUG]
+    --dry-run       Run the parser without writing output
 
-Click "Extract & Save" to process.
+Supported Banks:
+    - HDFC Bank
+    - ICICI Bank
+    - IndusInd Bank
 
-If statements are password protected, ensure the correct passwords are saved in secrets.json.
-
-Output Location:
-
-Excel: Documents/cc-analysis/consolidated_statements_v3.xlsx
-
-Unified DB: Documents/cc-analysis/consolidated.db
-
-Errors: AppData/cc-analysis/error.log
+Source Types:
+    - CreditCard
+    - Bank

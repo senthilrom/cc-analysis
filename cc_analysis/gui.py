@@ -1,18 +1,21 @@
 # cc_analysis/gui.py
 
+import json
+import os
+import platform
+import subprocess
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter import ttk
-import os
+
 import pandas as pd
-import json
-import subprocess
-import platform
-from cc_analysis.extractors import extract_hdfc, extract_indusind, append_to_excel, save_to_database
+
 from cc_analysis.bank_detector import detect_bank_type
-from cc_analysis.utils import validate_pdf_password, load_passwords, log_error
-from cc_analysis.bank_statement_parser import consolidate_all
-from cc_analysis.constants import BANK_DB_PATH, BANK_CSV_PATH, HELP_PATH, ABOUT_PATH, CATEGORY_MAP_PATH
+from cc_analysis.bank_statement_parser import consolidate_all, save_to_consolidated_db
+from cc_analysis.constants import HELP_PATH, ABOUT_PATH, CATEGORY_MAP_PATH, EXCEL_PATH
+from cc_analysis.extractors import extract_hdfc, extract_indusind, append_to_excel
+from cc_analysis.utils import validate_pdf_password, load_passwords, log_error, log_info
+
 
 def launch_gui():
     root = tk.Tk()
@@ -83,23 +86,30 @@ def launch_gui():
         combined_df = pd.DataFrame()
         pdf_files = []
         bank_files = []
+        skipped_files = []
+        failed_decrypts = []
+        unsupported_files = []
+        empty_parsed = []
 
         for f in file_paths:
+            if not os.path.exists(f):
+                skipped_files.append(f)
+                continue
             ext = os.path.splitext(f)[1].lower()
             if ext == ".pdf":
                 pdf_files.append(f)
             elif ext in [".xls", ".xlsx", ".csv"]:
                 bank_files.append(f)
+            else:
+                unsupported_files.append(f)
 
-        progress_label.config(text=f"Progress: 0/{len(file_paths)}")
+        total_files = len(pdf_files) + len(bank_files)
+        progress_label.config(text=f"Progress: 0/{total_files}")
         progress_var.set(0)
         root.update_idletasks()
 
         try:
             for idx, file in enumerate(pdf_files):
-                if not os.path.exists(file):
-                    continue
-
                 bank = None
                 password = None
                 for bnk, pwd in passwords.items():
@@ -109,8 +119,8 @@ def launch_gui():
                         break
 
                 if not bank or not password:
+                    failed_decrypts.append(file)
                     log_error(f"{file} - ❌ Could not decrypt or detect bank")
-                    messagebox.showerror("Error", f"{file} - ❌ Could not decrypt or detect bank")
                     continue
 
                 if bank == "HDFC":
@@ -118,44 +128,66 @@ def launch_gui():
                 elif bank == "IndusInd":
                     df = extract_indusind(file, password)
                 else:
+                    unsupported_files.append(file)
                     log_error(f"❌ Unsupported bank type for file: {os.path.basename(file)}")
-                    messagebox.showerror("Error", f"Unsupported bank type for file: {os.path.basename(file)}")
                     continue
 
                 if df.empty:
+                    empty_parsed.append(file)
                     log_error(f"{file} - ⚠️ No transaction data found, skipped.")
                     continue
 
-                df["Bank"] = bank
+                df["Bank"] = bank  # Tag bank
+                log_info(f"{file} - ✅ Extracted {len(df)} transactions using {bank} extractor")
+
+                # Sanity check for required columns
+                expected = {'Date', 'Description', 'Merchant', 'Category', 'Reward Points', 'Bank', 'SourceType',
+                            'Debit', 'Credit', 'Balance'}
+                missing = expected - set(df.columns)
+                if missing:
+                    log_error(f"{file} - ❌ Missing expected columns: {missing}")
+                    continue
+
                 combined_df = pd.concat([combined_df, df], ignore_index=True)
 
-                progress_label.config(text=f"Progress: {idx + 1}/{len(file_paths)}")
-                progress_var.set((idx + 1) * (100 / len(file_paths)))
+                # Update progress
+                progress_label.config(text=f"Progress: {idx + 1}/{total_files}")
+                progress_var.set((idx + 1) * (100 / total_files))
                 root.update_idletasks()
 
             cc_excel_written = 0
             cc_db_written = 0
             if not combined_df.empty:
-                cc_excel_written = append_to_excel(combined_df)
-                cc_db_written = save_to_database(combined_df)
+                cc_excel_written = append_to_excel(combined_df, source_type="CreditCard", excel_path=EXCEL_PATH)
+                cc_db_written = save_to_consolidated_db(combined_df, source_type="CreditCard")
 
+            # Process bank files
             if bank_files:
-                consolidate_all(bank_files, db_path=str(BANK_DB_PATH), csv_path=str(BANK_CSV_PATH))
+                consolidate_all(bank_files)
                 for jdx, _ in enumerate(bank_files):
-                    progress_label.config(text=f"Progress: {len(pdf_files) + jdx + 1}/{len(file_paths)}")
-                    progress_var.set((len(pdf_files) + jdx + 1) * (100 / len(file_paths)))
+                    progress_label.config(text=f"Progress: {len(pdf_files) + jdx + 1}/{total_files}")
+                    progress_var.set((len(pdf_files) + jdx + 1) * (100 / total_files))
                     root.update_idletasks()
 
-            if cc_excel_written or bank_files:
-                messagebox.showinfo(
-                    "Success",
-                    f"✅ Processed {len(file_paths)} files.\n"
-                    f"Credit Card Excel records: {cc_excel_written}\n"
-                    f"Credit Card DB records: {cc_db_written}\n"
-                    f"Bank statements saved to DB and CSV."
-                )
-            else:
-                messagebox.showinfo("Done", "⚠️ No valid data extracted from selected files.")
+            # === Final summary ===
+            summary = f"✅ Processed {total_files} files.\n"
+            if cc_excel_written:
+                summary += f"• Credit Card Excel records: {cc_excel_written}\n"
+            if cc_db_written:
+                summary += f"• Credit Card DB records: {cc_db_written}\n"
+            if bank_files:
+                summary += f"• Bank statements saved to DB\n"
+
+            if skipped_files:
+                summary += f"\n⚠️ Skipped (not found): {len(skipped_files)}"
+            if failed_decrypts:
+                summary += f"\n🔐 Decrypt failed: {len(failed_decrypts)}"
+            if unsupported_files:
+                summary += f"\n❌ Unsupported format: {len(unsupported_files)}"
+            if empty_parsed:
+                summary += f"\n📭 Empty transactions: {len(empty_parsed)}"
+
+            messagebox.showinfo("Process Summary", summary.strip())
 
         except Exception as e:
             log_error(f'Error during run_extraction: {str(e)}')

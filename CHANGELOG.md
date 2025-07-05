@@ -1,14 +1,22 @@
-v3.0.0 - 2025-06-29
+# Changelog
 
-🔄 Unified database (consolidated.db) for credit card and bank statements
+## [v3.0] - 2025-07-06
+### Added
+- Unified Excel sheet for CreditCard and Bank transactions.
+- Deduplication logic using `['Date', 'Description', 'Debit', 'Credit', 'Bank', 'SourceType']`
+- Amount column automatically derived from Credit - Debit
+- Unit tests with PyTest covering:
+  - Clean append
+  - Deduplication
+  - Malformed rows (missing values, non-numeric amounts)
 
-🆕 Added SourceType column to distinguish between CreditCard and Bank
+### Changed
+- Switched to single sheet output: `All_Transactions`
+- Enforced column structure and type checks before writing
 
-📊 Enhanced analytics foundation for consolidated spend pattern analysis
-
-📁 Excel consolidated into consolidated_statements_v3.xlsx
-
-📈 Future-proof structure for monthly & category-wise spend insights
+### Fixed
+- Resolved issue with malformed numeric data in 'Amount'
+- Correct handling of empty or incomplete rows
 
 v2.0.0 - 2025-06-29
 
