@@ -19,6 +19,9 @@ cc_analysis/utils.py
 cc_analysis.egg-info/PKG-INFO
 cc_analysis.egg-info/SOURCES.txt
 cc_analysis.egg-info/dependency_links.txt
+cc_analysis.egg-info/entry_points.txt
 cc_analysis.egg-info/requires.txt
 cc_analysis.egg-info/top_level.txt
+dist/cc-analysis/_internal/pdfminer/py.typed
+statement_checker/gui_statement_checker.py
 tests/test_append_excel.py

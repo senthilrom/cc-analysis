@@ -1,1 +1,4 @@
+build
 cc_analysis
+dist
+statement_checker

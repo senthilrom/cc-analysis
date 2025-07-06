@@ -15,7 +15,7 @@ from cc_analysis.bank_statement_parser import consolidate_all, save_to_consolida
 from cc_analysis.constants import HELP_PATH, ABOUT_PATH, CATEGORY_MAP_PATH, EXCEL_PATH
 from cc_analysis.extractors import extract_hdfc, extract_indusind, append_to_excel
 from cc_analysis.utils import validate_pdf_password, load_passwords, log_error, log_info
-
+from statement_checker.gui_statement_checker import launch_gui as launch_statement_gui
 
 def launch_gui():
     root = tk.Tk()
@@ -55,6 +55,7 @@ def launch_gui():
 
     tools_menu = tk.Menu(menubar, tearoff=0)
     tools_menu.add_command(label="Edit Category", command=edit_categories)
+    tools_menu.add_command(label="Statement Organizer", command=launch_statement_gui)
     menubar.add_cascade(label="Tools", menu=tools_menu)
 
     root.config(menu=menubar)

@@ -1,62 +1,58 @@
 Metadata-Version: 2.4
 Name: cc-analysis
 Version: 3.0.0
-Summary: Unified Credit Card + Bank Statement Parser with GUI
+Summary: A GUI tool to extract and consolidate credit card and bank statements into Excel.
 Home-page: https://github.com/senthilrom/cc-analysis
 Author: Senthil Kumar
-Author-email: senthilrom@gmail.com
+Author-email: Senthil Kumar <senthilrom@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2025 Senthil
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in
+        all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        THE SOFTWARE.
+Project-URL: Homepage, https://github.com/senthilrom/cc-analysis
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: pandas
-Requires-Dist: openpyxl
-Requires-Dist: tk
-Requires-Dist: matplotlib
-Requires-Dist: pytest>=8.3.5
+Requires-Dist: pdfplumber>=0.10.2
+Requires-Dist: pandas>=1.3
+Requires-Dist: openpyxl>=3.0
+Requires-Dist: PyPDF2>=3.0
+Requires-Dist: tabulate>=0.9
+Requires-Dist: python-docx>=1.0.0
+Requires-Dist: tkcalendar>=1.6.1
 Dynamic: license-file
 
-💡 Overview
+# Credit Card & Bank Transaction Consolidator
 
-This is a powerful personal finance tool to consolidate credit card and bank transactions from various formats and banks, including:
+This project consolidates PDF, CSV, and XLS statements from multiple banks and credit cards into a single deduplicated Excel sheet.
 
-Credit Card Statements (PDF)
+## ✅ Features
+- Parse HDFC, ICICI, IndusInd bank statements
+- Normalize and unify transaction formats
+- Deduplicate by key columns
+- Validate numeric fields like `Amount`
+- Save to Excel under `All_Transactions` sheet
 
-Bank Statements (PDF, Excel, CSV)
+## 🚀 Setup
 
-🔍 Supported Banks
-
-Credit Card: HDFC, IndusInd
-
-Bank Accounts: ICICI, HDFC, IndusInd
-
-🎯 Features
-
-🖼 Unified GUI (Tkinter-based)
-
-🧾 Supports PDFs, Excels, CSVs
-
-📑 Consolidated Excel summary + SQLite DB
-
-🧠 Auto detects bank types
-
-🪵 Error logging to file
-
-📁 All data saved in Documents/cc-analysis
-
-🔄 Version 3.0: Unified data store and analytics foundation
-
-🚀 Quick Start
-
+```bash
+python -m venv .venv
+source .venv/Scripts/activate  # Windows
 pip install -r requirements.txt
-
-Run the GUI:
-
-python -m cc_analysis.gui
-
-Select your files (.pdf/.csv/.xls)
-
-Click "Extract & Save"
-
-View Excel and DB files in:
-
-~/Documents/cc-analysis/
